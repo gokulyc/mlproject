@@ -1,8 +1,8 @@
 import os
 import sys
-
-import numpy as np 
-import pandas as pd
+from src.logger import logging
+# import numpy as np 
+# import pandas as pd
 import dill
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
@@ -46,6 +46,12 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
             test_model_score = r2_score(y_test, y_test_pred)
 
             report[list(models.keys())[i]] = test_model_score
+
+            logging.info(f"{list(models.keys())[i]} Model test score after GridSearchCV : {test_model_score}")
+            try:
+                logging.info(f"{list(models.keys())[i]} Model params for GridSearchCV : {model.get_params()}")
+            except Exception as e:
+                ...
 
         return report
 
